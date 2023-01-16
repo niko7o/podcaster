@@ -1,0 +1,11 @@
+.wrapper {
+  margin: var(--spacing-l);
+  padding: 12px;
+  box-shadow: var(--shadow);
+}
+
+.title {
+  font-family: var(--font-primary);
+  font-size: var(--font-m);
+  color: var(--color-primary);
+}
