@@ -1,0 +1,11 @@
+:root {
+  --shadow: 0 0 8px 0em #c9c9c9;
+
+  --font-s: 16px;
+  --font-m: 24px;
+  --font-xl: 32px;
+
+  --spacing-s: 8px;
+  --spacing-m: 16px;
+  --spacing-l: 32px;
+}
