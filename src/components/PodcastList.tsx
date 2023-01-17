@@ -5,7 +5,7 @@ import axios from 'axios'
 
 import { IPodcast } from '@types';
 
-import styles from '@styles/PodcastList.module.scss'
+import styles from '@styles/modules/PodcastList.module.scss'
 
 const LOCAL_STORAGE_KEY = 'STORED_PODCASTS';
 
