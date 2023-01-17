@@ -1,8 +1,9 @@
 import Head from 'next/head'
 
 import Header from '@components/Header';
+import PodcastList from '@components/PodcastList';
 
-const Home = () => {
+const Homepage = () => {
   return (
     <>
       <Head>
@@ -13,10 +14,11 @@ const Home = () => {
       </Head>
 
       <>
-        <Header />
+        <Header isLoading={false} />
+        <PodcastList />
       </>
     </>
   )
 }
 
-export default Home;
+export default Homepage;
