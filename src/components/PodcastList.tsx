@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image'
 import axios from 'axios'
 
-import { IPodcast } from '@types';
+import { IPodcast, ApiPodcast } from '@types';
 
 import styles from '@styles/modules/PodcastList.module.scss'
 
@@ -50,7 +50,7 @@ const PodcastList: React.FC = () => {
     try {
       const { data: { feed: { entry: apiPodcasts } } } = await axios.get(uri);
       // original API response comes with many fields we don't use, cleanup below
-      const minifiedPodcasts = apiPodcasts.map((item => ({
+      const minifiedPodcasts = apiPodcasts.map(((item: ApiPodcast) => ({
         image: item['im:image'][2]['label'],
         title: item['title']['label'],
         author: item['im:artist']['label']
