@@ -1,0 +1,32 @@
+.wrapper {
+  display: block;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.podcast {
+  font-family: var(--font-primary);
+  font-size: var(--font-xs);
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow);
+  padding: var(--spacing-l) 60px;
+  margin: var(--spacing-m);
+
+  &-cover {
+    border-radius: 50%;
+  }
+
+  &-title {
+    font-weight: bold;
+    margin-top: var(--spacing-m);
+    text-transform: uppercase;
+  }
+
+  &-author {
+    color: gray;
+    margin-top: var(--spacing-s);
+  }
+}
