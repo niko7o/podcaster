@@ -1,5 +1,5 @@
-import '@/styles/resets.css'
-import '@/styles/variables.css';
+import '@styles/resets.css';
+import '@styles/variables.css';
 
 import type { AppProps } from 'next/app'
 

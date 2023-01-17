@@ -2,6 +2,7 @@
   --shadow: 0 0 8px 0em #c9c9c9;
 
   --font-primary: sans-serif;
+  --font-xs: 14px;
   --font-s: 16px;
   --font-m: 20px;
   --font-xl: 32px;
@@ -10,5 +11,5 @@
   --spacing-m: 16px;
   --spacing-l: 32px;
 
-  --color-primary: #0083ff;
+  --color-primary: #0c6bc5;
 }
