@@ -1,7 +1,23 @@
+@import './breakpoints.module.scss';
+
+@mixin truncated-text {
+  width: 30ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
 .wrapper {
-  display: block;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   margin: 0 auto;
-  padding: 0 16px;
+  flex-direction: column;
+
+  @include from-tablet {
+    flex-direction: row;
+  }
 }
 
 .podcast {
@@ -9,24 +25,38 @@
   font-size: var(--font-xs);
   display: inline-flex;
   flex-direction: column;
+  flex-basis: 70%;
   justify-content: center;
   align-items: center;
   box-shadow: var(--shadow);
-  padding: var(--spacing-l) 60px;
-  margin: var(--spacing-m);
+  padding: var(--spacing-l);
+  margin: var(--spacing-s) auto;
+  max-width: 80%;
 
-  &-cover {
-    border-radius: 50%;
+  @include from-tablet {
+    flex-basis: 40%;
+    max-width: unset;
+    margin: var(--spacing-m);
   }
 
-  &-title {
-    font-weight: bold;
-    margin-top: var(--spacing-m);
-    text-transform: uppercase;
+  @include from-desktop {
+    flex-basis: 20%;
   }
+}
 
-  &-author {
-    color: gray;
-    margin-top: var(--spacing-s);
-  }
+.podcast-cover {
+  border-radius: 50%;
+}
+
+.podcast-title {
+  font-weight: bold;
+  margin-top: var(--spacing-m);
+  text-transform: uppercase;
+  @include truncated-text();
+}
+
+.podcast-author {
+  color: gray;
+  margin-top: var(--spacing-s);
+  @include truncated-text();
 }
