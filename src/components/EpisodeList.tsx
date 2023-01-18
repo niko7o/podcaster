@@ -4,8 +4,13 @@ import styles from '@styles/modules/EpisodeList.module.scss';
 
 import { IPodcastDetail } from '@types';
 
-const convertMsToReadableTime = (ms:number):string => {
-  return new Date(ms).toISOString().slice(11, 19)
+const getReadableDuration = (milliseconds:number):string => {
+  return new Date(milliseconds).toISOString().slice(11, 19)
+}
+
+const getReadableDate = (date: Date):string => {
+  const formattedDate = new Date(date);
+  return formattedDate.toLocaleDateString();
 }
 
 const EpisodeList: React.FC<IPodcastDetail> = ({ episodes }) => {
@@ -28,8 +33,8 @@ const EpisodeList: React.FC<IPodcastDetail> = ({ episodes }) => {
             {episodes.map(episode => (
               <tr className={styles['episode-list-row']} key={episode.title}>
                 <td className={styles['episode-list-title']}><Link href="/">{episode.title}</Link></td>
-                <td>{episode.date}</td>
-                <td>{convertMsToReadableTime(episode.duration)}</td>
+                <td>{getReadableDate(episode.date)}</td>
+                <td>{getReadableDuration(episode.duration)}</td>
               </tr>
             ))}
           </tbody>

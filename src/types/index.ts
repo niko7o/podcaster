@@ -5,7 +5,7 @@ export interface IPodcastDetail {
 
 export interface IPodcastDetailEpisode {
   title: string,
-  date: string,
+  date: Date,
   duration: number
 }
 
