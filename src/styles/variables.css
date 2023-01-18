@@ -1,10 +1,11 @@
 :root {
   --shadow: 0 0 8px 0em #c9c9c9;
 
-  --font-primary: sans-serif;
+  --font-primary: 'Sofia Sans', sans-serif;
   --font-xs: 14px;
   --font-s: 16px;
   --font-m: 20px;
+  --font-l: 24px;
   --font-xl: 32px;
 
   --spacing-s: 8px;
