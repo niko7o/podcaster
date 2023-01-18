@@ -11,29 +11,37 @@ const LOCAL_STORAGE_KEY = 'STORED_PODCASTS';
 
 const PodcastList: React.FC = () => {
   const [podcasts, setPodcasts] = useState<IPodcast[]>([])
+  const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
-    getPodcastsFromStorageOrAPI();
-  }, [])
+    const getPodcastsFromStorageOrAPI = async () => {
+      try {
+        const cachedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (cachedData) {
+          const cachedPodcasts = JSON.parse(cachedData);
+          const lastFetchDate = cachedPodcasts.lastFetchDate;
   
-  const getPodcastsFromStorageOrAPI = async () => {
-    try {
-      const cachedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (cachedData) {
-        const cachedPodcasts = JSON.parse(cachedData);
-        const lastFetchDate = cachedPodcasts.lastFetchDate;
-
-        if (isDateOlderThanADay(lastFetchDate)) {
-          await getPodcasts();
+          if (isDateOlderThanADay(lastFetchDate)) {
+            await getPodcasts();
+          } else {
+            setPodcasts(cachedPodcasts.podcasts);
+          }
         } else {
-          setPodcasts(cachedPodcasts.podcasts);
+          await getPodcasts();
         }
-      } else {
-        await getPodcasts();
+      } catch (err) {
+        console.error('getStoredPodcasts exception', err);
       }
-    } catch (err) {
-      console.error('getStoredPodcasts exception', err);
     }
+    getPodcastsFromStorageOrAPI();
+  }, []);
+
+  const getFilteredPodcasts = (podcasts: IPodcast[])  => {
+    return podcasts.filter(p => {
+      const isTitleMatched = p.title.toLowerCase().includes(searchText.toLowerCase());
+      const isAuthorMatched = p.author.toLowerCase().includes(searchText.toLowerCase());
+      return isTitleMatched || isAuthorMatched;
+    })
   }
 
   const setPodcastsToLocaleStorage = (podcasts: IPodcast[]) => {
@@ -69,11 +77,24 @@ const PodcastList: React.FC = () => {
     return (Math.abs(today - date) / 36e5) >= ONE_DAY_IN_HOURS;
   }
 
+  const filtered = getFilteredPodcasts(podcasts);
+
   return (
     <>
+      <div>
+        <input
+          className={styles['search-bar']}
+          type="text" 
+          value={searchText}
+          data-test="search-filter"
+          placeholder="Filter podcasts..."
+          onChange={(event) => setSearchText(event.target.value)}
+        />
+      </div>
+
       <div className={styles.wrapper}>
-        {podcasts ? podcasts.map((podcast, i) => (
-          <div className={styles.podcast} key={`${podcast.image}-${i}`} data-test="podcast">
+        {filtered.map((podcast) => (
+          <div className={styles.podcast} key={podcast.image} data-test="podcast">
             <Image
               className={styles['podcast-cover']}
               src={podcast.image} 
@@ -91,7 +112,7 @@ const PodcastList: React.FC = () => {
               Author: {podcast.author}
             </p>
           </div>
-        )) : <h1>no podcasts</h1>}
+        ))}
       </div>
    </>
   )
