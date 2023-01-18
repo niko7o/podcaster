@@ -1,3 +1,8 @@
+export interface IPodcastDetail {
+  details: IPodcastDetailSidebar,
+  episodes: IPodcastDetailEpisode[]
+}
+
 export interface IPodcastDetailEpisode {
   title: string,
   date: string,
@@ -20,9 +25,9 @@ export interface IPodcast {
 }
 
 export type ApiPodcastDetailResponse = {
-  trackTimeMillis: number,
   trackName: string,
-  releaseDate: Date
+  releaseDate: string
+  trackTimeMillis: string,
 }
 
 export type ApiPodcastResponse = {
