@@ -1,0 +1,28 @@
+.sidebar {
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  margin-left: var(--spacing-l);
+
+  &-image {
+    width: 200px;
+    height: 200px;
+  }
+
+  &-info {
+    width: 100%;
+    margin-top: var(--spacing-l);
+  }
+
+  &-description {
+    margin-top: var(--spacing-l);
+  }
+}
+
+.font-italic {
+  font-style: italic;
+}
