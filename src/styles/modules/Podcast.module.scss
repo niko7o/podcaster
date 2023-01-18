@@ -1,0 +1,58 @@
+@import '../breakpoints.module.scss';
+
+@mixin truncated-text {
+  width: 30ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.podcast {
+  font-family: var(--font-primary);
+  font-size: var(--font-xs);
+  display: inline-flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow);
+  margin: var(--spacing-s) var(--spacing-l);
+  padding: var(--spacing-m) 0;
+
+  @include from-tablet {
+    flex-basis: 40%;
+    max-width: unset;
+    margin: var(--spacing-m);
+    padding: var(--spacing-l);
+  }
+
+  @include from-desktop {
+    flex-basis: 20%;
+  }
+
+  &-cover {
+    border-radius: 50%;
+  }
+
+  &-title {
+    font-size: var(--font-s);
+    font-weight: bold;
+    margin-top: var(--spacing-m);
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: .2s color ease;
+    @include truncated-text();
+
+    &:hover {
+      color: var(--color-primary);
+      cursor: pointer;
+    }
+  }
+
+  &-author {
+    color: gray;
+    margin-top: var(--spacing-s);
+    @include truncated-text();
+  }
+}

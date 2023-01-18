@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
-import Image from 'next/image'
 import axios from 'axios'
 
 import { IPodcast, ApiPodcast } from '@types';
+import Podcast from '@components/Podcast';
 
 import styles from '@styles/modules/PodcastList.module.scss'
 
-const LOCAL_STORAGE_KEY = 'STORED_PODCASTS';
+const LOCAL_STORAGE_KEY = 'PODCAST_LIST';
 
 const PodcastList: React.FC = () => {
   const [podcasts, setPodcasts] = useState<IPodcast[]>([])
@@ -53,15 +53,25 @@ const PodcastList: React.FC = () => {
     }));
   }
 
+  const generateFriendlySlugFromUrl = (url: string) => {
+    const parts = url.split("/");
+    const start = parts.indexOf("podcast") + 1;
+    const end = parts.indexOf("id");
+    const slug = parts.slice(start, end).join("/");
+    return slug;
+  }
+
   const getPodcasts = async () => {
     const uri = 'https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json';
     try {
       const { data: { feed: { entry: apiPodcasts } } } = await axios.get(uri);
       // original API response comes with many fields we don't use, cleanup below
       const minifiedPodcasts = apiPodcasts.map(((item: ApiPodcast) => ({
+        id: item['id']['label'],
         image: item['im:image'][2]['label'],
         title: item['title']['label'],
-        author: item['im:artist']['label']
+        author: item['im:artist']['label'],
+        slug: generateFriendlySlugFromUrl(item['id']['label'])
       })))
       setPodcastsToLocaleStorage(minifiedPodcasts);
       setPodcasts(minifiedPodcasts);
@@ -97,24 +107,7 @@ const PodcastList: React.FC = () => {
 
       <div className={styles.list}>
         {filteredPodcasts.map((podcast) => (
-          <div className={styles.podcast} key={podcast.image} data-test="podcast">
-            <Image
-              className={styles['podcast-cover']}
-              src={podcast.image} 
-              width={100} 
-              height={100}
-              alt={podcast.title}
-              data-test="podcast-image"
-            />
-
-            <p className={styles['podcast-title']} data-test="podcast-title">
-              {podcast.title}
-            </p>
-            
-            <p className={styles['podcast-author']} data-test="podcast-author">
-              Author: {podcast.author}
-            </p>
-          </div>
+          <Podcast {...podcast} key={podcast.id}/>
         ))}
       </div>
    </>
