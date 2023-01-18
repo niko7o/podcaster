@@ -1,3 +1,16 @@
+export interface IPodcastDetailEpisode {
+  title: string,
+  date: string,
+  duration: string
+}
+
+export interface IPodcastDetailSidebar {
+  image: string,
+  title: string,
+  author: string,
+  description: string
+}
+
 export interface IPodcast {
   id: string,
   slug: string,
@@ -6,9 +19,17 @@ export interface IPodcast {
   author: string
 }
 
-export type ApiPodcast = {
+export type ApiPodcastDetailResponse = {
+  trackTimeMillis: number,
+  trackName: string,
+  releaseDate: Date
+}
+
+export type ApiPodcastResponse = {
   'id': {
-    label: string
+    'attributes': {
+      'im:id': string
+    }
   },
   'im:image': ApiPodcastImage[],
   'title': {

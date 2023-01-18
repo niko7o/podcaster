@@ -1,0 +1,43 @@
+.episode-list {
+  flex-wrap: wrap;
+  padding: 0 var(--spacing-l);
+
+  td {
+    padding: 0px 8px;
+  }
+
+  &-counter {
+    flex-basis: 100%;
+    box-shadow: var(--shadow);
+    padding: var(--spacing-s);
+    margin-bottom: var(--spacing-m)
+  }
+
+  &-table {
+    box-shadow: var(--shadow);
+    flex-basis: 100%;
+
+    &-header {
+      height: 40px;
+      font-weight: bold;
+      padding-left: 8px;
+    }
+  }
+
+  &-row {
+    height: 40px;
+
+    &:nth-child(even) {
+      background: rgb(245, 245, 245)
+    }
+
+    &:nth-child(odd) {
+      background: #FFF
+    }
+  }
+}
+
+.episodes {
+  max-height: 80vh;
+  overflow-y: scroll;
+}
