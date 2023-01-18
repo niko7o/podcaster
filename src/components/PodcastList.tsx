@@ -77,11 +77,14 @@ const PodcastList: React.FC = () => {
     return (Math.abs(today - date) / 36e5) >= ONE_DAY_IN_HOURS;
   }
 
-  const filtered = getFilteredPodcasts(podcasts);
+  const filteredPodcasts = getFilteredPodcasts(podcasts);
 
   return (
     <>
-      <div>
+      <div className={styles['search']}>
+        <span className={styles['search-results']}>
+          {filteredPodcasts.length}
+        </span>
         <input
           className={styles['search-bar']}
           type="text" 
@@ -92,8 +95,8 @@ const PodcastList: React.FC = () => {
         />
       </div>
 
-      <div className={styles.wrapper}>
-        {filtered.map((podcast) => (
+      <div className={styles.list}>
+        {filteredPodcasts.map((podcast) => (
           <div className={styles.podcast} key={podcast.image} data-test="podcast">
             <Image
               className={styles['podcast-cover']}

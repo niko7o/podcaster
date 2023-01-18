@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import styles from '@styles/modules/Header.module.scss';
 
 type HeaderProps = {
@@ -6,7 +8,9 @@ type HeaderProps = {
 
 const Header = ({ isLoading }: HeaderProps) => (
   <div className={styles.wrapper}>
-    <h1 className={styles.title}>Podcaster</h1>
+    <Link href="/" className={styles.title}>
+      Podcaster
+    </Link>
     {isLoading && <p>Loading....</p>}
   </div>
 )
