@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { IPodcastDetail, ApiPodcastDetailResponse, IPodcastDetailEpisode } from '@types';
 
+import Spinner from '@components/Spinner';
 import Sidebar from '@components/Sidebar';
 import EpisodeList from '@components/EpisodeList';
 
@@ -16,7 +17,7 @@ const PodcastDetail = ({ podcastId }) => {
   // @TO-DO: add fetched podcast info to localStorage same as PodcastList
 
   const getPodcastDetail = async () => {
-    const EPISODE_LIMIT = 9;
+    const EPISODE_LIMIT = 30;
     const baseUrl = `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=${EPISODE_LIMIT}`
     const fullUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(baseUrl)}`
     

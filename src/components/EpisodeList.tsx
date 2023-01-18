@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import styles from '@styles/modules/EpisodeList.module.scss';
 
 import { IPodcastDetail } from '@types';
@@ -21,7 +23,7 @@ const EpisodeList: React.FC<IPodcastDetail> = ({ episodes }) => {
           <tbody>
             {episodes.map(episode => (
               <tr className={styles['episode-list-row']} key={episode.title}>
-                <td>{episode.title}</td>
+                <td className={styles['episode-list-title']}><Link href="/">{episode.title}</Link></td>
                 <td>{episode.date}</td>
                 <td>{episode.duration}</td>
               </tr>

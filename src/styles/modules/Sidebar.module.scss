@@ -1,5 +1,6 @@
+@import '../breakpoints.module.scss';
+
 .sidebar {
-  width: 380px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -7,7 +8,11 @@
   padding: 24px;
   box-shadow: var(--shadow);
   margin: 0 var(--spacing-l);
+  height: fit-content;
 
+  @include from-desktop {
+    width: 380px;
+  }
 
   &-image {
     width: 200px;

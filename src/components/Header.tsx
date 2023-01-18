@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+import Spinner from '@components/Spinner';
+
 import styles from '@styles/modules/Header.module.scss';
 
 type HeaderProps = {
@@ -7,11 +9,12 @@ type HeaderProps = {
 }
 
 const Header = ({ isLoading }: HeaderProps) => (
-  <div className={styles.wrapper}>
+  <div className={styles.header}>
     <Link href="/" className={styles.title}>
       Podcaster
     </Link>
-    {isLoading && <p>Loading....</p>}
+
+    <Spinner isLoading={true} />
   </div>
 )
 

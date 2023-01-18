@@ -1,5 +1,11 @@
+@import '../breakpoints.module.scss';
+
 .podcast-detail {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
+
+  @include from-desktop {
+    flex-direction: row;
+  }
 }
