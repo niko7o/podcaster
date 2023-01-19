@@ -2,15 +2,18 @@ import axios from 'axios'
 
 import { useState, useEffect } from 'react';
 
-import { IPodcastDetail, ApiPodcastDetailResponse, IPodcastDetailEpisode } from '@types';
+import { IPodcastDetail, ApiPodcastDetailResponse, IEpisodeDetail } from '@types';
 
-import Spinner from '@components/Spinner';
 import Sidebar from '@components/Sidebar';
 import EpisodeList from '@components/EpisodeList';
 
 import styles from '@styles/modules/PodcastDetail.module.scss';
 
-const PodcastDetail = ({ podcastId }) => {
+type Props = {
+  podcastId: string | string[] | undefined
+} 
+
+const PodcastDetail: React.FC<Props> = ({ podcastId }) => {
   const [isLoading, setLoading] = useState(false);
   const [podcast, setPodcast] = useState<IPodcastDetail | null>(null);
   
@@ -26,6 +29,7 @@ const PodcastDetail = ({ podcastId }) => {
       const { data } = await axios.get(fullUrl);
       if (data) {
         const results = JSON.parse(data.contents).results;
+        console.log('getPodcastDetail', results)
         const formattedPodcast = {
           details: {
             image: results[0].artworkUrl600,
@@ -33,10 +37,13 @@ const PodcastDetail = ({ podcastId }) => {
             author: results[0].artistName,
             description: results[1].description,
           },
-          episodes: results.map((episode: ApiPodcastDetailResponse): IPodcastDetailEpisode => ({
+          episodes: results.map((episode: ApiPodcastDetailResponse): IEpisodeDetail => ({
             title: episode.trackName,
             date: episode.releaseDate,
-            duration: episode.trackTimeMillis
+            duration: episode.trackTimeMillis,
+            episodeId: episode.trackId,
+            episodeDescription: episode.description,
+            episodeAudio: episode.episodeUrl
           }))
         }
         setPodcast(formattedPodcast);
@@ -48,8 +55,11 @@ const PodcastDetail = ({ podcastId }) => {
     }
   }
 
+  console.log('podcast', podcast)
+
   useEffect(() => {
     getPodcastDetail()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

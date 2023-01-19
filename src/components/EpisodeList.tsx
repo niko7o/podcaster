@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
 
 import styles from '@styles/modules/EpisodeList.module.scss';
 
@@ -14,6 +16,9 @@ const getReadableDate = (date: Date):string => {
 }
 
 const EpisodeList: React.FC<IPodcastDetail> = ({ episodes }) => {
+  const router = useRouter();
+  const { podcastId } = router.query;
+
   return (
     <div className={styles['episode-list']}>
       <div className={styles['episode-list-counter']}>
@@ -32,7 +37,9 @@ const EpisodeList: React.FC<IPodcastDetail> = ({ episodes }) => {
           <tbody>
             {episodes.map(episode => (
               <tr className={styles['episode-list-row']} key={episode.title}>
-                <td className={styles['episode-list-title']}><Link href="/">{episode.title}</Link></td>
+                <td className={styles['episode-list-title']}>
+                  <Link href={`./${podcastId}/episode/${episode.episodeId}`}>{episode.title}</Link>
+                </td>
                 <td>{getReadableDate(episode.date)}</td>
                 <td>{getReadableDuration(episode.duration)}</td>
               </tr>

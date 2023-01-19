@@ -12,7 +12,6 @@ const PodcastDetailPage = () => {
     <>
       <Head>
         <title>Podcast: {podcastId}</title>
-        <meta name="description" content="Small application to listen to musical podcasts." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
