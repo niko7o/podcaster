@@ -37,3 +37,24 @@ Podcaster is an application that retrieves the top 100 podcasts from Apple.
 - Although the original design did not come with mobile designs, these styles were developed in a Mobile First manner with some breakpoints building up to Tablet and Desktop. Feel free to take a look from your mobile phone device at https://podcaster-eight.vercel.app
 
 - The approach of the designs was strictly maintained to those proposed in the PDF, as asked on the page 2 of the exercise summary.
+
+# Architecture optimizations
+
+- For a more "production-ready" approach if this was a realistic use-case: we could have *avoided doing queries in the client-side* and done them in the server-side instead. Benefits would have included:
+  - faster page load times with less impact on the browser with things to compute: the page doesn't need additional javascript to render.
+  - *less rerenders* (no need to use setState since the data can be fed directly computed via props, a context or similar)
+  - better *Google Core Web vitals* since the browser has to do less 
+    - cumulative layout shift would be heavily improved since the pages mount with data solved/fetched already
+    - largest contentful paint would improve dramatically on its `Element render delay` submetric 
+    - for curiosity: https://web.dev/optimize-lcp/
+  - as side effect of the above, better SEO performance
+    - for curiosity: https://searchengineland.com/server-side-rendering-what-seos-need-to-understand-346296
+
+- A more robust caching solution like *redis* would have been ideal here for `key:value` structure
+  - time-based expirations for validity would have been as easy as passing an extra `EX` parameter without any date handling as we did
+  ```js
+    await redisClient.set(podcasts, JSON.stringify(results), {
+        EX: 86400, // cache validity in seconds, one day
+    }
+  ```
+  - for curiosity: https://www.digitalocean.com/community/tutorials/how-to-implement-caching-in-node-js-using-redis
