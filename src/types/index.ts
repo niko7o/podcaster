@@ -3,6 +3,10 @@ export interface IPodcastDetail {
   episodes: IEpisodeDetail[]
 }
 
+export interface IEpisodeList {
+  episodes: IEpisodeDetail[]
+}
+
 export interface IEpisodeDetail {
   title: string,
   date: Date,

@@ -1,39 +1,37 @@
 import { useEffect, useState } from 'react';
-
 import axios from 'axios'
 
 import { IPodcast, ApiPodcastResponse } from '@types';
+
 import Podcast from '@components/Podcast';
+import Header from '@components/Header';
+
+import useLocalStorage from '@hooks/useLocalStorage';
+import { fetchOnlyAfter24Hours } from '@/utils';
 
 import styles from '@styles/modules/PodcastList.module.scss'
 
 const LOCAL_STORAGE_KEY = 'PODCAST_LIST';
 
 const PodcastList: React.FC = () => {
-  const [podcasts, setPodcasts] = useState<IPodcast[]>([])
-  const [searchText, setSearchText] = useState('')
+  const [podcasts, setPodcasts] = useState<IPodcast[]>([]);
+  const [searchText, setSearchText] = useState('');
+  const [isLoading, setLoading] = useState(false);
+
+  const { setValue } = useLocalStorage();
 
   useEffect(() => {
     const getPodcastsFromStorageOrAPI = async () => {
       try {
-        const cachedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-        if (cachedData) {
-          const cachedPodcasts = JSON.parse(cachedData);
-          const lastFetchDate = cachedPodcasts.lastFetchDate;
-  
-          if (isDateOlderThanADay(lastFetchDate)) {
-            await getPodcasts();
-          } else {
-            setPodcasts(cachedPodcasts.podcasts);
-          }
-        } else {
-          await getPodcasts();
-        }
+        setLoading(true);
+        await fetchOnlyAfter24Hours(LOCAL_STORAGE_KEY, getPodcasts, setPodcasts)
+        setLoading(false);
       } catch (err) {
         console.error('getStoredPodcasts exception', err);
       }
     }
     getPodcastsFromStorageOrAPI();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getFilteredPodcasts = (podcasts: IPodcast[])  => {
@@ -45,12 +43,10 @@ const PodcastList: React.FC = () => {
   }
 
   const setPodcastsToLocaleStorage = (podcasts: IPodcast[]) => {
-    localStorage.setItem(
-      LOCAL_STORAGE_KEY, 
-      JSON.stringify({ 
-        podcasts,
-        lastFetchDate: new Date()
-    }));
+    setValue(LOCAL_STORAGE_KEY, JSON.stringify({
+      storedData: podcasts,
+      lastFetchDate: new Date()
+    }))
   }
 
   const getPodcasts = async () => {
@@ -72,16 +68,12 @@ const PodcastList: React.FC = () => {
     }
   }
 
-  const isDateOlderThanADay = (date: Date): boolean => {
-    const ONE_DAY_IN_HOURS = 24;
-    const today = new Date();
-    return (Math.abs(today.valueOf() - date.valueOf()) / 36e5) >= ONE_DAY_IN_HOURS;
-  }
-
   const filteredPodcasts = getFilteredPodcasts(podcasts);
 
   return (
     <>
+      <Header isLoading={isLoading} />
+
       <div className={styles['search']}>
         <span className={styles['search-results']}>
           {filteredPodcasts.length}
@@ -95,7 +87,7 @@ const PodcastList: React.FC = () => {
           onChange={(event) => setSearchText(event.target.value)}
         />
       </div>
-
+      
       <div className={styles.list}>
         {filteredPodcasts.map((podcast) => (
           <Podcast {...podcast} key={podcast.id}/>

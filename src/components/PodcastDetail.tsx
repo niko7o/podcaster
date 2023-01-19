@@ -6,6 +6,10 @@ import { IPodcastDetail, ApiPodcastDetailResponse, IEpisodeDetail } from '@types
 
 import Sidebar from '@components/Sidebar';
 import EpisodeList from '@components/EpisodeList';
+import Header from '@components/Header';
+
+import useLocalStorage from '@hooks/useLocalStorage';
+import { fetchOnlyAfter24Hours } from '@/utils';
 
 import styles from '@styles/modules/PodcastDetail.module.scss';
 
@@ -16,20 +20,26 @@ type Props = {
 const PodcastDetail: React.FC<Props> = ({ podcastId }) => {
   const [isLoading, setLoading] = useState(false);
   const [podcast, setPodcast] = useState<IPodcastDetail | null>(null);
-  
-  // @TO-DO: add fetched podcast info to localStorage same as PodcastList
 
+  const { setValue } = useLocalStorage();
+  const PODCAST_KEY = `PODCAST_${podcastId}`;
+
+  const getDetailsFromAPIOrLocal = async () => {
+    setLoading(true);
+    await fetchOnlyAfter24Hours(PODCAST_KEY, getPodcastDetail, setPodcast);
+    setLoading(false);
+  }
+  
   const getPodcastDetail = async () => {
     const EPISODE_LIMIT = 30;
     const baseUrl = `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=${EPISODE_LIMIT}`
     const fullUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(baseUrl)}`
     
     try {
-      setLoading(true)
+      setLoading(true);
       const { data } = await axios.get(fullUrl);
       if (data) {
         const results = JSON.parse(data.contents).results;
-        console.log('getPodcastDetail', results)
         const formattedPodcast = {
           details: {
             image: results[0].artworkUrl600,
@@ -37,7 +47,7 @@ const PodcastDetail: React.FC<Props> = ({ podcastId }) => {
             author: results[0].artistName,
             description: results[1].description,
           },
-          episodes: results.map((episode: ApiPodcastDetailResponse): IEpisodeDetail => ({
+          episodes: results.slice(1, results.length).map((episode: ApiPodcastDetailResponse): IEpisodeDetail => ({
             title: episode.trackName,
             date: episode.releaseDate,
             duration: episode.trackTimeMillis,
@@ -47,24 +57,28 @@ const PodcastDetail: React.FC<Props> = ({ podcastId }) => {
           }))
         }
         setPodcast(formattedPodcast);
+        setValue(PODCAST_KEY, JSON.stringify({ 
+          storedData: formattedPodcast,
+          lastFetchDate: new Date()
+        }));
       }      
-      setLoading(false)
+      setLoading(false);
     } catch (err) {
       console.log('getPodcastDetail exception', err);
+      setLoading(false);
       return null;
     }
   }
 
-  console.log('podcast', podcast)
-
   useEffect(() => {
-    getPodcastDetail()
+    getDetailsFromAPIOrLocal()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <div>
-      {isLoading && <h1>Loading..</h1>}
+      <Header isLoading={isLoading} />
+
       {podcast && (
         <div className={styles['podcast-detail']}>
           <Sidebar

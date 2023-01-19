@@ -1,21 +1,13 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-
 import styles from '@styles/modules/EpisodeList.module.scss';
 
-import { IPodcastDetail } from '@types';
+import { getReadableDate, getReadableDuration } from '@/utils';
 
-const getReadableDuration = (milliseconds:number):string => {
-  return new Date(milliseconds).toISOString().slice(11, 19)
-}
+import { IEpisodeList } from '@types';
 
-const getReadableDate = (date: Date):string => {
-  const formattedDate = new Date(date);
-  return formattedDate.toLocaleDateString();
-}
-
-const EpisodeList: React.FC<IPodcastDetail> = ({ episodes }) => {
+const EpisodeList: React.FC<IEpisodeList> = ({ episodes }) => {
   const router = useRouter();
   const { podcastId } = router.query;
 
@@ -34,11 +26,14 @@ const EpisodeList: React.FC<IPodcastDetail> = ({ episodes }) => {
               <td>Duration</td>
             </tr>
           </thead>
+
           <tbody>
             {episodes.map(episode => (
               <tr className={styles['episode-list-row']} key={episode.title}>
                 <td className={styles['episode-list-title']}>
-                  <Link href={`./${podcastId}/episode/${episode.episodeId}`}>{episode.title}</Link>
+                  <Link href={`./${podcastId}/episode/${episode.episodeId}`}>
+                    {episode.title}
+                  </Link>
                 </td>
                 <td>{getReadableDate(episode.date)}</td>
                 <td>{getReadableDuration(episode.duration)}</td>

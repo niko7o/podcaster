@@ -14,7 +14,7 @@ const Header = ({ isLoading }: HeaderProps) => (
       Podcaster
     </Link>
 
-    <Spinner isLoading={true} />
+    <Spinner isLoading={isLoading} />
   </div>
 )
 
