@@ -27,10 +27,3 @@ export const getReadableDate = (date: Date):string => {
   const formattedDate = new Date(date);
   return formattedDate.toLocaleDateString();
 }
-
-export const getSanitizedAudioUrl = (audioUrl: string) => {
-  const regex = /https(.*?)[^\/]\.mp3/;
-  const match = audioUrl.match(regex);
-  console.log('getSanitizedAudioUrl', match[0]);
-  return match[0];
-}
