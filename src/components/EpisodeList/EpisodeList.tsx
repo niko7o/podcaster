@@ -12,9 +12,9 @@ const EpisodeList: React.FC<IEpisodeList> = ({ episodes }) => {
   const { podcastId } = router.query;
 
   return (
-    <div className={styles['episode-list']}>
+    <div className={styles['episode-list']} data-test="episode-list">
       <div className={styles['episode-list-counter']}>
-        <h2>Episodes: {episodes.length}</h2>
+        <h2 data-test="episode-counter">Episodes: {episodes.length}</h2>
       </div>
 
       <div className={styles['episodes']}>
@@ -31,7 +31,7 @@ const EpisodeList: React.FC<IEpisodeList> = ({ episodes }) => {
             {episodes.map(episode => (
               <tr className={styles['episode-list-row']} key={episode.title}>
                 <td className={styles['episode-list-title']}>
-                  <Link href={`./${podcastId}/episode/${episode.episodeId}`}>
+                  <Link data-test="episode-title" href={`./${podcastId}/episode/${episode.episodeId}`}>
                     {episode.title}
                   </Link>
                 </td>

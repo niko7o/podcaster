@@ -42,17 +42,23 @@ const EpisodeDetail: React.FC<Props> = ({ episodeId }) => {
           author={details.author} 
           description={details.description}
         />
-        <div className={styles['episode-detail-main']}>
-          <p className={styles['episode-detail-title']}>
-            <Link href={`/podcast/${podcastId}`}>{episode.title}</Link>
+        
+        <div className={styles['episode-detail-main']} data-test="episode-detail">
+          <p className={styles['episode-detail-title']} data-test="episode-detail-title">
+            <Link 
+              href={`/podcast/${podcastId}`}
+              data-test="episode-title"
+            >
+              {episode.title}
+            </Link>
           </p>
 
-          <div 
+          <div
             className={styles['episode-detail-description']}
             dangerouslySetInnerHTML={{ __html: episode.episodeDescription }}
           />
             
-          <audio controls>
+          <audio controls data-test="episode-detail-mp3">
             <source src={episode.episodeAudio} type="audio/mpeg" />
             Your browser does not support the audio element.
           </audio>

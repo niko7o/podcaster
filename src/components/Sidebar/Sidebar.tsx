@@ -19,7 +19,8 @@ const Sidebar: React.FC<IPodcastDetailSidebar> = ({
     <div className={styles.sidebar}>
 
     <Link href={`/podcast/${podcastId}`}>
-      <Image 
+      <Image
+        data-test="sidebar-image"
         className={styles['sidebar-image']} 
         width="400" 
         height="400" 
