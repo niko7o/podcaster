@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import EpisodeDetail from '@/components/EpisodeDetail';
+import EpisodeDetail from '@components/EpisodeDetail/EpisodeDetail';
 
 const EpisodePage = () => {
   const router = useRouter();

@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import Header from '@components/Header';
-import Sidebar from '@components/Sidebar';
+import Header from '@components/Header/Header';
+import Sidebar from '@components/Sidebar/Sidebar';
 
 import { IEpisodeDetail } from '@types'
 
-import styles from '@styles/modules/EpisodeDetail.module.scss';
+import styles from './EpisodeDetail.module.scss';
 
 type Props = {
   episodeId: string | string[] | undefined

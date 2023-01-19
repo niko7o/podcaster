@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 import { IPodcast } from '@types';
 
-import styles from '@styles/modules/Podcast.module.scss'
+import styles from './Podcast.module.scss'
 
 const Podcast: React.FC<IPodcast> = ({ id, image, title, author }) => (
   <>

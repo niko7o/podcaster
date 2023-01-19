@@ -4,14 +4,14 @@ import { useState, useEffect } from 'react';
 
 import { IPodcastDetail, ApiPodcastDetailResponse, IEpisodeDetail } from '@types';
 
-import Sidebar from '@components/Sidebar';
-import EpisodeList from '@components/EpisodeList';
-import Header from '@components/Header';
+import Sidebar from '@components/Sidebar/Sidebar';
+import EpisodeList from '@components/EpisodeList/EpisodeList';
+import Header from '@components/Header/Header';
 
 import useLocalStorage from '@hooks/useLocalStorage';
 import { fetchOnlyAfter24Hours } from '@/utils';
 
-import styles from '@styles/modules/PodcastDetail.module.scss';
+import styles from './PodcastDetail.module.scss';
 
 type Props = {
   podcastId: string | string[] | undefined

@@ -1,4 +1,4 @@
-import styles from '@styles/modules/Spinner.module.scss';
+import styles from './Spinner.module.scss';
 
 type SpinnerProps = {
   isLoading: boolean

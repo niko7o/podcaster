@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import styles from '@styles/modules/EpisodeList.module.scss';
+import styles from './EpisodeList.module.scss';
 
 import { getReadableDate, getReadableDuration } from '@/utils';
 

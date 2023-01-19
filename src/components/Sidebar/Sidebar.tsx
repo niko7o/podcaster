@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import styles from '@styles/modules/Sidebar.module.scss';
+import styles from './Sidebar.module.scss';
 
 const Sidebar: React.FC<IPodcastDetailSidebar> = ({
   image,

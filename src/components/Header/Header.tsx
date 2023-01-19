@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
-import Spinner from '@components/Spinner';
+import Spinner from '@components/Spinner/Spinner';
 
-import styles from '@styles/modules/Header.module.scss';
+import styles from './Header.module.scss';
 
 type HeaderProps = {
   isLoading: boolean

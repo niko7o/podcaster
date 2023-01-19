@@ -1,4 +1,4 @@
-@import '../breakpoints.module.scss';
+@import '../../styles/breakpoints.module.scss';
 
 $table-row-height: 48px;
 
@@ -65,9 +65,10 @@ $table-row-height: 48px;
 
 .episodes {
   box-shadow: var(--shadow);
+  margin-bottom: var(--spacing-l);
 
   @include from-desktop {
-    max-height: 80vh;
+    max-height: 75vh;
     overflow-y: scroll;
   }
 }

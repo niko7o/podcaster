@@ -1,7 +1,6 @@
 import Head from 'next/head'
 
-import Header from '@components/Header';
-import PodcastList from '@components/PodcastList';
+import PodcastList from '@components/PodcastList/PodcastList';
 
 const Homepage = () => (
   <>

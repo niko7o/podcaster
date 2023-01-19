@@ -3,13 +3,13 @@ import axios from 'axios'
 
 import { IPodcast, ApiPodcastResponse } from '@types';
 
-import Podcast from '@components/Podcast';
-import Header from '@components/Header';
+import Podcast from '@components/Podcast/Podcast';
+import Header from '@components/Header/Header';
 
 import useLocalStorage from '@hooks/useLocalStorage';
 import { fetchOnlyAfter24Hours } from '@/utils';
 
-import styles from '@styles/modules/PodcastList.module.scss'
+import styles from './PodcastList.module.scss'
 
 const LOCAL_STORAGE_KEY = 'PODCAST_LIST';
 
