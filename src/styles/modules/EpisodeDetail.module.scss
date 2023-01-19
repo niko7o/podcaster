@@ -1,3 +1,41 @@
 @import '../breakpoints.module.scss';
 
-.episode-detail {}
+.episode-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include from-desktop {
+    flex-direction: row;
+  }
+
+  &-title {
+    font-size: var(--font-m);
+    font-weight: bold;
+    margin-bottom: var(--spacing-m);
+
+    a {
+      text-decoration: none;
+
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+  }
+
+  &-description {
+    margin-bottom: var(--spacing-m);
+  }
+
+  &-main {
+    height: fit-content;
+    box-shadow: var(--shadow);
+    padding: var(--spacing-l);
+    margin: var(--spacing-l);
+
+    @include from-desktop {
+      margin: 0 var(--spacing-l) 0 0;
+      width: 50%;
+    }
+  }
+}

@@ -27,6 +27,14 @@
   &-description {
     margin-top: var(--spacing-l);
   }
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-primary)
+    }
+  }
 }
 
 .font-italic {
