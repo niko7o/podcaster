@@ -13,7 +13,6 @@ const Homepage = () => (
     </Head>
 
     <>
-      <Header isLoading={false} />
       <PodcastList />
     </>
   </>

@@ -2,7 +2,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import EpisodeDetail from '@/components/EpisodeDetail';
-import Header from '@components/Header';
 
 const EpisodePage = () => {
   const router = useRouter();
@@ -17,8 +16,7 @@ const EpisodePage = () => {
       </Head>
       
       <>
-        <Header isLoading={false} />
-        <EpisodeDetail episodeId={episodeId} />
+        {router.isReady && <EpisodeDetail episodeId={episodeId} />}
       </>
     </>
   )

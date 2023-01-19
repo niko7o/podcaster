@@ -1,29 +1,62 @@
-import styles from '@styles/modules/EpisodeDetail.module.scss';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
+import Header from '@components/Header';
 import Sidebar from '@components/Sidebar';
+
+import { IEpisodeDetail } from '@types'
+
+import styles from '@styles/modules/EpisodeDetail.module.scss';
 
 type Props = {
   episodeId: string | string[] | undefined
 }
 
 const EpisodeDetail: React.FC<Props> = ({ episodeId }) => {
+  const router = useRouter();
+  const { podcastId } = router.query;
+
+  const getEpisodeInformation = () => {
+    const key = `PODCAST_${podcastId}`;
+    const data = localStorage.getItem(key);
+    if (data) {
+      const cachedData = JSON.parse(data);
+      const details = cachedData.storedData.details;
+      const episode = cachedData.storedData.episodes.find(
+        (ep: IEpisodeDetail) => ep.episodeId.toString() === episodeId)
+      return { details, episode };
+    }
+    return {};
+  }
+
+  const { episode, details } = getEpisodeInformation();
+    
   return (
     <>
-      <Sidebar 
-        image={'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'} 
-        title={'c'} 
-        author={'b'} 
-        description={'a'} 
-      />
+      <Header isLoading={false} />
       
       <div className={styles['episode-detail']}>
-        <h1>Episode: {episodeId}</h1>
-        <p>Lorem ipsum episode description bla bla</p>
-        <p>Sponsored by</p>
-        <audio controls>
-          <source src="https://dts.podtrac.com/redirect.mp3/dovetail.prxu.org/_/93/4de981be-4f3f-472a-8ff9-f4ed722d0a42/SongExploder240_PanicAtTheDisco.mp3" type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
+        <Sidebar 
+          image={details.image} 
+          title={details.title} 
+          author={details.author} 
+          description={details.description}
+        />
+        <div className={styles['episode-detail-main']}>
+          <p className={styles['episode-detail-title']}>
+            <Link href={`/podcast/${podcastId}`}>{episode.title}</Link>
+          </p>
+
+          <div 
+            className={styles['episode-detail-description']}
+            dangerouslySetInnerHTML={{ __html: episode.episodeDescription }}
+          />
+            
+          <audio controls>
+            <source src={episode.episodeAudio} type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
       </div>
     </>
   )

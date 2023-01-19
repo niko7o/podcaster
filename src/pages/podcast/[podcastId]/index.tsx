@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import Header from '@components/Header';
 import PodcastDetail from '@components/PodcastDetail';
 
 const PodcastDetailPage = () => {
@@ -17,7 +16,6 @@ const PodcastDetailPage = () => {
       </Head>
 
       <>
-        <Header isLoading={false} />
         {router.isReady && <PodcastDetail podcastId={podcastId} />}
       </>
     </>
