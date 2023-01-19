@@ -25,5 +25,10 @@ export const getReadableDuration = (milliseconds:number):string => {
 
 export const getReadableDate = (date: Date):string => {
   const formattedDate = new Date(date);
-  return formattedDate.toLocaleDateString();
+
+  return formattedDate.toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: '2-digit',
+    day: 'numeric'
+  });
 }
