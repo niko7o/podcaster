@@ -35,6 +35,9 @@
       "@types": [
         "./src/types/index"
       ],
+      "@hooks*": [
+        "./src/hooks/*"
+      ],
     }
   },
   "include": [
