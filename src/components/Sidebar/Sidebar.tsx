@@ -17,18 +17,17 @@ const Sidebar: React.FC<IPodcastDetailSidebar> = ({
 
   return (
     <div className={styles.sidebar}>
-
-    <Link href={`/podcast/${podcastId}`}>
-      <Image
-        data-test="sidebar-image"
-        className={styles['sidebar-image']} 
-        width="400" 
-        height="400" 
-        src={image} 
-        alt={title} 
-      />
-    /</Link>
-      
+      <Link href={`/podcast/${podcastId}`}>
+        <Image
+          data-test="sidebar-image"
+          className={styles['sidebar-image']} 
+          width="400" 
+          height="400" 
+          src={image} 
+          alt={title} 
+        />
+      </Link>
+        
       <div className={styles['sidebar-info']}>
         <p><strong>{title}</strong></p>
         <span>by</span> 
