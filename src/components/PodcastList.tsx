@@ -72,10 +72,10 @@ const PodcastList: React.FC = () => {
     }
   }
 
-  const isDateOlderThanADay = (date: Date) => {
+  const isDateOlderThanADay = (date: Date): boolean => {
     const ONE_DAY_IN_HOURS = 24;
     const today = new Date();
-    return (Math.abs(today - date) / 36e5) >= ONE_DAY_IN_HOURS;
+    return (Math.abs(today.valueOf() - date.valueOf()) / 36e5) >= ONE_DAY_IN_HOURS;
   }
 
   const filteredPodcasts = getFilteredPodcasts(podcasts);
